@@ -27,12 +27,13 @@ app.get("/api/persons", (req, res) => {
 // PERSONS
 app.get("/api/persons/:id", (req, res) => {
   const id = Number(req.params.id);
-  const entry = entries.find((entry) => entry.id === id);
-  if (entry) {
-    res.json(entry);
-  } else {
-    res.status(404).end();
-  }
+  Person.findById(id).then((person) => {
+    if (person) {
+      res.json(person);
+    } else {
+      res.status(404).end();
+    }
+  });
 });
 
 app.post("/api/persons/", (req, res) => {
@@ -44,23 +45,14 @@ app.post("/api/persons/", (req, res) => {
     });
   }
 
-  const isNameUnique = entries.every((entry) => entry.name !== body.name);
-
-  if (!isNameUnique) {
-    return res.status(400).json({
-      error: "Name must be unique",
-    });
-  }
-
-  const entry = {
+  const person = new Person({
     name: body.name,
     number: body.number,
-    id: Math.floor(Math.random() * 100000),
-  };
+  });
 
-  entries = [...entries, entry];
-
-  res.json(entry);
+  person.save().then((savedPerson) => {
+    res.json(savedPerson);
+  });
 });
 
 app.delete("/api/persons/:id", (req, res) => {
