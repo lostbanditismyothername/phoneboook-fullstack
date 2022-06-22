@@ -22,4 +22,8 @@ Content-Type: application/json
   "number": "42"
 }
 
+###
+
+GET http://localhost:3001/api/persons/62b32e6d4d4bd94d24ac2696
+
 

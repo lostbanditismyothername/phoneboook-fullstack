@@ -39,7 +39,7 @@ app.get("/api/persons", (req, res, next) => {
 
 // PERSONS
 app.get("/api/persons/:id", (req, res, next) => {
-  const id = Number(req.params.id);
+  const id = req.params.id;
   Person.findById(id)
     .then((person) => {
       if (person) {
@@ -103,10 +103,16 @@ app.put("/api/persons/:id", (req, res, next) => {
 });
 
 // INFO
-// app.get("/api/info", (req, res) => {
-//   res.send(`<p>Phonebook has info about ${entries.length} people</p>
-//   <p>${new Date()}</p>`);
-// });
+app.get("/api/info", (req, res) => {
+  Person.count({}, (error, result) => {
+    if (error) {
+      console.log(error);
+    } else {
+      res.send(`<p>Phonebook has info about ${result} people</p>
+  <p>${new Date()}</p>`);
+    }
+  });
+});
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
