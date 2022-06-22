@@ -11,7 +11,7 @@ mongoose
   .catch((err) => console.log(`Error: ${err.message}`));
 
 const personSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+  name: { type: String, required: true, minLength: 3 },
   number: { type: Number, required: true },
 });
 
