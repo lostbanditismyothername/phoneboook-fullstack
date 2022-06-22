@@ -19,7 +19,6 @@ app.use(express.static("build"));
 
 app.get("/api/persons", (req, res) => {
   Person.find({}).then((persons) => {
-    console.log(persons);
     res.json(persons);
   });
 });
@@ -67,7 +66,7 @@ app.get("/api/info", (req, res) => {
   <p>${new Date()}</p>`);
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
